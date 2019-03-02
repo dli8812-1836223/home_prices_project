@@ -1,4 +1,4 @@
-# home_prices_project
+# Project Proposal 
 
 By Daniel Li, Candice Lee, Nick Fang and Torin Dye 
 =======
