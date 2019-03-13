@@ -1,3 +1,4 @@
+
 library(dplyr)
 library(plotly)
 library(stringr)
@@ -73,4 +74,8 @@ labels <- sprintf(
   Current Avg Rent: $%g ",
   state_rents$NAME, state_rents$`2019/01`
 ) %>% lapply(htmltools::HTML)
+
+
+
+
 
