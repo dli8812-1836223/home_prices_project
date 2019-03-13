@@ -2,9 +2,8 @@ library(ggplot2)
 library(dplyr)
 library(plotly)
 library(shiny)
-source("ui-nf.R")
+source("ui-td.R")
 
-#
 server <- shinyServer(function(input, output) {
   output$scatter <- renderPlotly({
     rents_year <- rents_year %>%
