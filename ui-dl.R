@@ -26,7 +26,8 @@ shinyUI(navbarPage(
           "Napa" = "Napa, CA",
           "San Jose" = "San Jose, CA",
           "San Luis Obispo" = "San Luis Obispo, CA"
-        )
+        
+          )
       ),
       selectInput(
         "city2",
