@@ -69,7 +69,7 @@ max_list <- c(max(rents_year$mean_2010, na.rm = TRUE),
               )
 
 #Making UI
-ui <- shinyUI(navbarPage("Rental Prices",
+ui_td <- shinyUI(navbarPage("Rental Prices",
       tabPanel("Price by Area",
       titlePanel("Rental Price by Size Rank, Per Year"),
       sidebarLayout(

@@ -4,7 +4,7 @@ library(plotly)
 library(shiny)
 source("ui-td.R")
 
-server <- shinyServer(function(input, output) {
+server_td <- shinyServer(function(input, output) {
   output$scatter <- renderPlotly({
     rents_year <- rents_year %>%
       filter(rents_year[[input$area]] > input$price_range[1],
@@ -38,4 +38,4 @@ server <- shinyServer(function(input, output) {
              title = "Rental Price ($)")
     scatter_plot
     })})
-shinyApp(ui, server)
+shinyApp(ui_td, server_td)
