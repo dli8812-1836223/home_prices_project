@@ -128,7 +128,13 @@ ui <- shinyUI(navbarPage(
         )
       ),
       mainPanel(
-        leafletOutput("rents_map")
+        leafletOutput("rents_map"),
+        p("This is a choropleth map of the United States and the state average 
+          rent prices. The data displayed currently is the rent prices collected
+          from 2019. In the side panel bar, you (as the user) can choose to 
+          examine data from the previous 5 years. The map is color coded into 9 
+          different price ranges, which also correlates to the legend displayed
+          in the bottom right corner.")
       )
     )
   ), #closes tab panel 1
