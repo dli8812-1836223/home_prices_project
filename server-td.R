@@ -38,4 +38,5 @@ server_td <- shinyServer(function(input, output) {
              title = "Rental Price ($)")
     scatter_plot
     })})
+
 shinyApp(ui_td, server_td)
