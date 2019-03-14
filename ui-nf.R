@@ -14,7 +14,7 @@ library(maps)
 library(sp)
 library(shiny)
 
-shinyUI(navbarPage(
+ui <- shinyUI(navbarPage(
   "Rent Prices Project",
   tabPanel(
     "US Map",
@@ -22,7 +22,7 @@ shinyUI(navbarPage(
     sidebarLayout(
       sidebarPanel(
         selectInput(
-          inputId = year_var,
+          inputId = "year_var",
           label = h3("Select Year"),
           choices = list(
             "2019 Rent Prices" = "2019/01",
@@ -32,14 +32,15 @@ shinyUI(navbarPage(
             "2015 Rent Prices" = "2015/01"
           ),
           selected = "2019 Rent Prices"
-        ),
-        mainPanel(
-          leafletOutput("rents_map")
         )
+      ),
+      mainPanel(
+        leafletOutput("rents_map")
       )
     )
   )
-))  
+))
+
 
 
 
