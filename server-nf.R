@@ -37,6 +37,12 @@ bins <- c(500, 800, 1100, 1400, 1700, 2000, 2300,
           2600, 2900, Inf)
 pal <- colorBin("Reds", domain = state_rents$`2019/01`, bins = bins) 
 
+labels <- sprintf(
+  "<strong>%s</strong><br/>
+  Rent Price: $%g ",
+  state_rents$NAME, state_rents$`2019/01`
+) %>% lapply(htmltools::HTML)
+
 rents_map <- leaflet(state_rents) %>% 
   setView(-96, 37.8, 2) %>% 
   addTiles() %>% 
@@ -59,12 +65,6 @@ rents_map <- leaflet(state_rents) %>%
       textsize = "15px", direction = "auto")) %>% 
   addLegend(pal = pal, values = ~state_rents$`2019/01`, opacity = 6, 
             title = NULL, position = "bottomright")
-
-labels <- sprintf(
-  "<strong>%s</strong><br/>
-  Rent Price: $%g ",
-  state_rents$NAME, state_rents$`2019/01`
-) %>% lapply(htmltools::HTML)
 
 
 #Shiny Integration
