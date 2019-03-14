@@ -7,18 +7,28 @@ library(knitr)
 library(leaflet)
 library(shiny)
 
-rents_df <- read.csv("Metro_MedianRentalPrice_2Bedroom.csv", stringsAsFactors = FALSE)
-
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2010.", "2010/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2011.", "2011/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2012.", "2012/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2013.", "2013/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2014.", "2014/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2015.", "2015/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2016.", "2016/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2017.", "2017/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2018.", "2018/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2019.", "2019/")))
+rents_df <- read.csv("Metro_MedianRentalPrice_2Bedroom.csv",
+                     stringsAsFactors = FALSE)
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2010.",
+                                                             "2010/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2011.",
+                                                             "2011/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2012.",
+                                                             "2012/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2013.",
+                                                             "2013/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2014.",
+                                                             "2014/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2015.",
+                                                             "2015/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2016.",
+                                                             "2016/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2017.",
+                                                             "2017/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2018.",
+                                                             "2018/")))
+rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2019.",
+                                                             "2019/")))
 
 rents_test <- rents_df %>%
   mutate(mean_2010 = rowMeans(rents_df[3:14], na.rm = TRUE),
@@ -87,4 +97,12 @@ ui <- shinyUI(navbarPage("Rental Prices",
                     label = "Show Trendline",
                     value = TRUE)
       ),
-      mainPanel(plotlyOutput("scatter"))))))
+      mainPanel(plotlyOutput("scatter"),
+                p("The chart above depicts the relationship between each city's
+                  size rank, their size ranked in the top 350 biggest cities,
+                  and the average rental price in the given year. The data
+                  includes the average of the United States as a whole as the
+                  marker with a size rank of 0. The relationship shows that the 
+                  more sizable cities are more expensive on average, with a few
+                  outliers. This is especially true in the top 50 cities, where
+                  there is a sudden rise in average rental price."))))))

@@ -26,13 +26,16 @@ server <- shinyServer(function(input, output) {
              xaxis = list(title = "Size Rank"),
              yaxis = list(title = "Rental Price ($)",
                           showlegend = FALSE))
-      if(input$box) {scatter_plot <- 
+      if (input$box) {
+        scatter_plot <-
         add_lines(scatter_plot, x = rents_year$SizeRank, y = ~fitted(
         loess(rents_year[[input$area]] ~ rents_year$SizeRank)),
         line = list(color = "black"),
         name = "Trendline",
-        showlegend = FALSE) %>%
-        colorbar(title = "Rental Price ($)")}
+        showlegend = FALSE)
+        }
+    colorbar(scatter_plot,
+             title = "Rental Price ($)")
     scatter_plot
     })})
 shinyApp(ui, server)
