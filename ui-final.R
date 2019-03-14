@@ -135,7 +135,9 @@ City_data <- full_join(Seattle_data, LA_data, by = colnames(home.prices)) %>%
 NewRow <- c("data", "size", 0, seq(2010, 2019, by=0.084))
 City_data <- InsertRow(City_data, NewRow, RowNum = NULL)
 
-ui <- shinyUI(navbarPage(
+ui <- shinyUI(fluidPage(theme="style.css",
+  
+  navbarPage(
   "Rental Prices",
   tabPanel(
     "Project Introduction",
@@ -175,6 +177,7 @@ ui <- shinyUI(navbarPage(
       a("zillow", href="https://www.zillow.com/research/data/")
     )
   ),
+
 
   tabPanel(
     "US Map",
@@ -321,8 +324,7 @@ ui <- shinyUI(navbarPage(
         would be the least costly.")
     )
   ) #closes tab panel
-))
-
+)))
 
 
 
