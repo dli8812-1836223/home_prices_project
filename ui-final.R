@@ -14,6 +14,7 @@ library(maps)
 library(sp)
 library(shiny)
 library(htmltools)
+library(DataCombine)
 
 source("ui-td.R")
 source("ui-nf.R")
@@ -81,22 +82,88 @@ max_list <- c(max(rents_year$mean_2010, na.rm = TRUE),
               max(rents_year$mean_2019, na.rm = TRUE)
 )
 
+home.prices <- read.csv("Metro_MedianRentalPrice_2Bedroom.csv", stringsAsFactors = FALSE)
 
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2010.", "2010/"))) 
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2011.", "2011/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2012.", "2012/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2013.", "2013/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2014.", "2014/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2015.", "2015/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2016.", "2016/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2017.", "2017/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2018.", "2018/")))
+home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2019.", "2019/")))
+
+#Creating the overall year data
+overall_year_data <- select(home.prices, -RegionName, -SizeRank)
+
+#Creating yearly dataframes
+year_2010_data <- select(home.prices, "2010/01":"2010/12")
+year_2011_data <- select(home.prices, "2011/01":"2011/12")
+year_2012_data <- select(home.prices, "2012/01":"2012/12")
+year_2013_data <- select(home.prices, "2013/01":"2013/12")
+year_2014_data <- select(home.prices, "2014/01":"2014/12")
+year_2015_data <- select(home.prices, "2015/01":"2015/12")
+year_2016_data <- select(home.prices, "2016/01":"2016/12")
+year_2017_data <- select(home.prices, "2017/01":"2017/12")
+year_2018_data <- select(home.prices, "2018/01":"2018/12")
+year_2019_data <- select(home.prices, "2019/01")
+
+
+#Creating the year names as data values
+year_names <- data.frame(colnames(overall_year_data))
+num_year <- data.frame(year = c(2010:2019))
+
+
+
+#Creating the City data frames
+
+Seattle_data <- filter(home.prices, RegionName == "Seattle, WA")
+NY_data <- filter(home.prices, RegionName == "New York, NY")
+Chicago_data <- filter(home.prices, RegionName == "Chicago, IL")
+SF_data <- filter(home.prices, RegionName == "San Francisco, CA")
+US_data <- filter(home.prices, RegionName == "United States")
+LA_data <- filter(home.prices, RegionName == "Los Angeles-Long Beach-Anaheim, CA")
+
+City_data <- full_join(Seattle_data, LA_data, by = colnames(home.prices)) %>%
+  full_join(SF_data, Seattle_data, by = colnames(home.prices)) %>% 
+  full_join(NY_data, SF_data, by = colnames(home.prices)) %>% 
+  full_join(US_data, SF_data, by = colnames(home.prices)) %>% 
+  full_join(Chicago_data, SF_data, by = colnames(home.prices))
+
+NewRow <- c("data", "size", 0, seq(2010, 2019, by=0.084))
+City_data <- InsertRow(City_data, NewRow, RowNum = NULL)
 
 ui <- shinyUI(navbarPage(
   "Rental Prices",
   tabPanel(
     "Project Introduction",
     p("Introduction
-      The current housing shortage is affecting people nationwide, as prices have continued to skyrocket in the past few years. Potential buyers are forced to rent for longer periods of time, as the competitive market and rising rates will not allow for affordability to emerging independents. More and more people are forced to live with several others or move home with parents, as they are tired of paying for something they are never going to own. To provide context, rents in the third quarter of 2018 were up 2.9 percent compared with a year ago. As college students, we are always concerned about where we can find the best cost-efficient housing. Thus, we decided to explore a dataset with housing rental prices. 
+      The current housing shortage is affecting people nationwide, as prices 
+      have continued to skyrocket in the past few years. Potential buyers are 
+      forced to rent for longer periods of time, as the competitive market and 
+      rising rates will not allow for affordability to emerging independents. 
+      More and more people are forced to live with several others or move home 
+      with parents, as they are tired of paying for something they are never 
+      going to own. To provide context, rents in the third quarter of 2018 were 
+      up 2.9 percent compared with a year ago. As college students, we are 
+      always concerned about where we can find the best cost-efficient housing. 
+      Thus, we decided to explore a dataset with housing rental prices. 
       
       
       Our Audience
-      Our primary target audience is college students who are planning to graduate and are unsure where they may live next year. During their searches for employment, that may mean they need to live outside their homes, and thus need to find a place to stay. Providing rental prices for locations nationally will give people an idea of where they might consider living. 
+      Our primary target audience is college students who are planning to 
+      graduate and are unsure where they may live next year. During their 
+      searches for employment, that may mean they need to live outside their 
+      homes, and thus need to find a place to stay. Providing rental prices for 
+      locations nationally will give people an idea of where they might 
+      consider living. 
       
       
       Inspirations to look deeper
-      With rising prices in the housing market, there are plenty of unanswered questions that can be answered through out data sets. 
+      With rising prices in the housing market, there are plenty of unanswered 
+      questions that can be answered through out data sets. 
       
       Some questions we believe could be answered include:
         
@@ -138,6 +205,29 @@ ui <- shinyUI(navbarPage(
       )
     )
   ), #closes tab panel 1
+  
+  tabPanel("Line Graph",
+      titlePanel("Changes in Home Prices"),
+      sidebarLayout(
+        sidebarPanel(
+               
+          radioButtons("city", label = h3("Select the City"),
+                      choices = list(
+                        "United States" = "United States",
+                        "Seattle, WA" = "Seattle",
+                        "Los Angeles-Long Beach-Anaheim, CA" = "Los Angeles",
+                        "New York, NY" = "New York",
+                        "Chicago, IL" = "Chicago",
+                        "San Francisco, CA" = "San Francisco"), 
+                        selected = "United States")
+               
+             ),
+        mainPanel(
+          plotOutput("linechart")
+        )
+      )
+    ),
+  
   tabPanel("Price by Area",
            titlePanel("Rental Price by Size Rank, Per Year"),
            sidebarLayout(
