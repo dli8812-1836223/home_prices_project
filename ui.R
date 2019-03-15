@@ -16,9 +16,9 @@ library(shiny)
 library(htmltools)
 library(DataCombine)
 library(rsconnect)
+library(cssTools)
 
-# source("www/style.css")
-
+##source("www/style.css")
 
 source("API-Key.R")
 register_google(key = key)
@@ -138,13 +138,13 @@ NewRow <- c("data", "size", 0, seq(2010, 2019, by=0.084))
 City_data <- InsertRow(City_data, NewRow, RowNum = NULL)
 
 
-ui_final <- shinyUI(fluidPage(theme="www/style.css",
+ui_final <- shinyUI(fluidPage(theme="style.css",
   navbarPage(
   "Rental Prices",
   tabPanel(
     "Project Introduction",
-    p("Introduction
-      The current housing shortage is affecting people nationwide, as prices 
+    h3("Introduction"),
+    p("The current housing shortage is affecting people nationwide, as prices 
       have continued to skyrocket in the past few years. Potential buyers are 
       forced to rent for longer periods of time, as the competitive market and 
       rising rates will not allow for affordability to emerging independents. 
@@ -153,19 +153,16 @@ ui_final <- shinyUI(fluidPage(theme="www/style.css",
       going to own. To provide context, rents in the third quarter of 2018 were 
       up 2.9 percent compared with a year ago. As college students, we are 
       always concerned about where we can find the best cost-efficient housing. 
-      Thus, we decided to explore a dataset with housing rental prices. 
-      
-      
-      Our Audience
-      Our primary target audience is college students who are planning to 
+      Thus, we decided to explore a dataset with housing rental prices."),
+    h3(" Our Audience"), 
+    p("Our primary target audience is college students who are planning to 
       graduate and are unsure where they may live next year. During their 
       searches for employment, that may mean they need to live outside their 
       homes, and thus need to find a place to stay. Providing rental prices for 
       locations nationally will give people an idea of where they might 
-      consider living. 
-      
-      
-      Inspirations to look deeper
+      consider living."),
+    h3("Inspirations to look deeper"),
+    p("
       With rising prices in the housing market, there are plenty of unanswered 
       questions that can be answered through out data sets. 
       
