@@ -5,9 +5,9 @@ account: nfang16
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 791035
-bundleId: 1940759
+bundleId: 1941037
 url: https://nfang16.shinyapps.io/home_prices_project/
-when: 1552600281.57745
+when: 1552607447.16495
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: README.md|torin_and_daniel.R|ui-dl.R
+ignoredFiles: .Rapp.history|API-Key.R|README.md|server-nf.R|server-old.r|server-td.R|ui-dl.R|ui-nf.R|ui-old.R|ui-td.R

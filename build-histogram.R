@@ -9,6 +9,18 @@ top_20 <- as.data.frame(home[2:20,], drop = FALSE)
 
 three <- home %>% select(RegionName, X2016.01, X2017.01, X2018.01, X2019.01)
 
+build_histogram <- function(data, year_and_month, num_bins) {
+  ggplot(data, mapping = aes(x = year_and_month)) +
+    labs(title = "Rental Prices in the United States") +
+    xlab("Rental Prices") +
+    ylab("Amount of Cities") +
+    geom_histogram(bins = num_bins)
+}
+build_histogram(three, three$X2018.01, 50)
+build_histogram(three, three$X2016.01, 50)
+build_histogram(three, three$X2017.01, 50)
+build_histogram(three, three$X2019.01, 50)
+
 histogram <- function(data,
                       city_1,
                       city_2,
