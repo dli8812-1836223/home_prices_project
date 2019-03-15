@@ -7,27 +7,7 @@ h2 {
   font-size: 4rem;
   text-align: center;
   font-weight: bold;
-   font-family: 'Pacifico', normal;
+   font-family: Arial, normal;
   color: cornflowerblue;
   text-shadow: 3px 3px rgba(0,0,0,0.1), 7px 7px rgba(0,0,0,0.05);
 }
-
-.shiny-options-group {
-  font-family: "Courier New";
-  color: midnightblue;
-  
-}
-
-.well {
-  border: 2px solid #e3e3e3;
-  
-
-}
-
-.control-label {
-  font-family: "Ariel";
-  font-size: 1rem;
-  color: mediumblue;
-  font-style: italic;
-}
-

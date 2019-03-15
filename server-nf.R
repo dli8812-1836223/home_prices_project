@@ -11,6 +11,7 @@ library(sp)
 library(shiny)
 library(tidyr)
 
+
 source("ui-nf.R")
 rents_df <- read.csv("State_MedianRentalPrice_2Bedroom.csv", stringsAsFactors = FALSE)
 states <- states(cb=T)
@@ -111,7 +112,6 @@ server <- shinyServer(function(input, output) {
   })
 })
 
-shinyApp(ui, server)
 
 
 
