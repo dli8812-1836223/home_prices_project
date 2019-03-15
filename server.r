@@ -22,21 +22,33 @@ source("ui.R")
 source("build-histogram.R")
 
 
-rents_df <- read.csv("State_MedianRentalPrice_2Bedroom.csv", stringsAsFactors = FALSE)
+rents_df <- read.csv("State_MedianRentalPrice_2Bedroom.csv", 
+                     stringsAsFactors = FALSE)
 states <- states(cb=T)
 
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2010.", "2010/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2011.", "2011/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2012.", "2012/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2013.", "2013/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2014.", "2014/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2015.", "2015/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2016.", "2016/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2017.", "2017/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2018.", "2018/")))
-rents_df <- rename_if(rents_df, is.numeric, funs(str_replace(., "X2019.", "2019/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2010.", "2010/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2011.", "2011/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2012.", "2012/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2013.", "2013/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2014.", "2014/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2015.", "2015/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2016.", "2016/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2017.", "2017/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2018.", "2018/")))
+rents_df <- rename_if(rents_df, is.numeric, 
+                      funs(str_replace(., "X2019.", "2019/")))
 
-geo <- geocode(location = rents_df$RegionName, output = "latlon", source = "google")
+geo <- geocode(location = rents_df$RegionName, output = "latlon", 
+               source = "google")
 rents_df$lon <- geo$lon
 rents_df$lat <- geo$lat
 rents_df <- rents_df %>% rename(NAME = RegionName)
@@ -109,8 +121,8 @@ server_final <- shinyServer(function(input, output) {
         labelOptions = labelOptions(
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px", direction = "auto")) %>% 
-      addLegend(rents_map, pal = pal, values = ~state_rents[[input$year_var]], opacity = 6, 
-                title = NULL, position = "bottomright")
+      addLegend(rents_map, pal = pal, values = ~state_rents[[input$year_var]], 
+                opacity = 6, title = NULL, position = "bottomright")
     
     
     labels <- sprintf(

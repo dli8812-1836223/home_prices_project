@@ -84,18 +84,29 @@ max_list <- c(max(rents_year$mean_2010, na.rm = TRUE),
               max(rents_year$mean_2019, na.rm = TRUE)
 )
 
-home.prices <- read.csv("Metro_MedianRentalPrice_2Bedroom.csv", stringsAsFactors = FALSE)
+home.prices <- read.csv("Metro_MedianRentalPrice_2Bedroom.csv", 
+                        stringsAsFactors = FALSE)
 
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2010.", "2010/"))) 
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2011.", "2011/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2012.", "2012/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2013.", "2013/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2014.", "2014/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2015.", "2015/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2016.", "2016/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2017.", "2017/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2018.", "2018/")))
-home.prices <- rename_if(home.prices, is.numeric, funs(str_replace(., "X2019.", "2019/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2010.", "2010/"))) 
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2011.", "2011/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2012.", "2012/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2013.", "2013/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2014.", "2014/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2015.", "2015/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2016.", "2016/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2017.", "2017/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2018.", "2018/")))
+home.prices <- rename_if(home.prices, is.numeric, 
+                         funs(str_replace(., "X2019.", "2019/")))
 
 #Creating the overall year data
 overall_year_data <- select(home.prices, -RegionName, -SizeRank)
@@ -126,7 +137,8 @@ NY_data <- filter(home.prices, RegionName == "New York, NY")
 Chicago_data <- filter(home.prices, RegionName == "Chicago, IL")
 SF_data <- filter(home.prices, RegionName == "San Francisco, CA")
 US_data <- filter(home.prices, RegionName == "United States")
-LA_data <- filter(home.prices, RegionName == "Los Angeles-Long Beach-Anaheim, CA")
+LA_data <- filter(home.prices, 
+                  RegionName == "Los Angeles-Long Beach-Anaheim, CA")
 
 City_data <- full_join(Seattle_data, LA_data, by = colnames(home.prices)) %>%
   full_join(SF_data, Seattle_data, by = colnames(home.prices)) %>% 
@@ -258,14 +270,14 @@ ui_final <- shinyUI(fluidPage(theme="style.css",
                              value = TRUE)
              ),
              mainPanel(plotlyOutput("scatter"),
-                       p("The chart above depicts the relationship between each city's
-                         size rank, their size ranked in the top 350 biggest cities,
-                         and the average rental price in the given year. The data
-                         includes the average of the United States as a whole as the
-                         marker with a size rank of 0. The relationship shows that the 
-                         more sizable cities are more expensive on average, with a few
-                         outliers. This is especially true in the top 50 cities, where
-                         there is a sudden rise in average rental price.")))),
+                p("The chart above depicts the relationship between each city's
+                  size rank, their size ranked in the top 350 biggest cities,
+                  and the average rental price in the given year. The data
+                  includes the average of the United States as a whole as the
+                  marker with a size rank of 0. The relationship shows that the 
+                  more sizable cities are more expensive on average, with a few
+                  outliers. This is especially true in the top 50 cities, where
+                  there is a sudden rise in average rental price.")))),
   tabPanel(
     "Histogram",
     titlePanel("Rental Prices on the West Coast in 2019"),
